@@ -1,0 +1,4 @@
+#!/bin/sh
+
+wine $HOME/.wine/drive_c/ptxt.exe $@
+
