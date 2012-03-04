@@ -2,7 +2,7 @@
 
 VER=0.1.0
 DAT=14.12.2011
-F18INSTALL=~/bin
+F18INSTALL=/opt/knowhowERP/util
 ARCH=`uname -m`
 DELRB_VER="1.0"
 PTXT_VER="1.55"
@@ -14,11 +14,11 @@ echo "F18 lin installacija ...."
 
 echo "F18 req."
 
-sudo apt-get update
-sudo apt-get install libqt4-sql-psql
-sudo apt-get install wine
-sudo apt-get install vim-gtk
-sudo apt-get install wget 
+#sudo apt-get update
+#sudo apt-get install libqt4-sql-psql
+#sudo apt-get install wine
+#sudo apt-get install vim-gtk
+#sudo apt-get install wget 
 wget -N http://winetricks.org/winetricks 
 chmod +x winetricks
 sh winetricks -q  riched20
