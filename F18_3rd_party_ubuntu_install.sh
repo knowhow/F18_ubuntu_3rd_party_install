@@ -84,7 +84,7 @@ tar xvf ptxt_fonts.tar
 cp -av ptxt.exe ~/.wine/drive_c/
 cp -av delphirb.exe ~/.wine/drive_c/
 
-cp -av fonts/ptxt_fonts/*.ttf  ~/.wine/drive_c/windows/Fonts/
+cp -av ptxt_fonts/*.ttf  ~/.wine/drive_c/windows/Fonts/
 
 chmod +x $F18_ISTALL/ptxt
 chmod +x $F18_ISTALL/f18_editor
