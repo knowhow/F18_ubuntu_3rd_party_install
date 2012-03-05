@@ -69,9 +69,10 @@ cp -av $D_FILE $TMP_DIR
 echo "kopiram utils" 
 
 cd $CUR_DIR
-cp -av util/ptxt  $F18_ISTALL
-cp -av util/F18_update  $F18_ISTALL
+cp -av util/F18_update $F18_ISTALL
 cp -av util/f18_editor $F18_ISTALL
+cp -av util/ptxt       $F18_ISTALL
+cp -av util/dephirb    $F18_ISTALL
 
 
 cd $TMP_DIR
@@ -89,25 +90,20 @@ cp -av ptxt_fonts/*.ttf  ~/.wine/drive_c/windows/Fonts/
 chmod +x $F18_ISTALL/ptxt
 chmod +x $F18_ISTALL/f18_editor
 
-#echo ".....OK zavrsio sa kopiranjem"
 
-#echo "setujem envars"
-
-#echo export PATH=\$PATH:~/bin >> ~/.bash_profile
-#echo ""
-#echo ""
-#echo "F18 instalacija zavrsena, pokrecemo iz terminala sa F18 "
-
+echo " "
 DIR=~/.wine/drive_c
 echo $DIR
 echo ---------------------------------------
 ls -l $DIR
 
+echo " "
 DIR=~/.wine/drive_c/windows/Fonts
 echo $DIR
 echo ---------------------------------------
 ls -l $DIR
 
+echo " "
 DIR=/opt/knowhowERP/util
 echo $DIR
 echo ---------------------------------------
