@@ -57,7 +57,7 @@ wget -N http://knowhow-erp-f18.googlecode.com/files/$D_FILE
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=ptxt_fonts.tar.bz2
-wget -N http://knowhow-erp-f18.googlecode.com/files/
+wget -N http://knowhow-erp-f18.googlecode.com/files/$D_FILE
 cp -av $D_FILE $TMP_DIR
 
 #gzip -dN F18_Ubuntu_"$ARCH"_"$F18_VER".gz
@@ -98,8 +98,19 @@ chmod +x $F18_ISTALL/f18_editor
 #echo ""
 #echo "F18 instalacija zavrsena, pokrecemo iz terminala sa F18 "
 
+DIR=~/.wine/drive_c
+echo $DIR
+echo ---------------------------------------
+ls -l $DIR
 
-ls  -l ~/.wine/drive_c
-ls  -l ~/.wine/drive_c/windows/Fonts
-ls  -l $F18_INSTALL
+DIR=~/.wine/drive_c/windows/Fonts
+echo $DIR
+echo ---------------------------------------
+ls -l $DIR
+
+DIR=/opt/knowhowERP/util
+echo $DIR
+echo ---------------------------------------
+ls -l $DIR
+
 
