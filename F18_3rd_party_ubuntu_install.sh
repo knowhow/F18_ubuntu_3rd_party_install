@@ -1,15 +1,17 @@
 #!/bin/bash
 
-VER=0.1.0
-DAT=14.12.2011
-F18INSTALL=/opt/knowhowERP/util
+VER=0.2.0
+DAT=05.03.2012
+
+
+F18_ISTALL=/opt/knowhowERP/util
 ARCH=`uname -m`
 DELRB_VER="1.0"
 PTXT_VER="1.55"
 F18_VER="0.9.18"
-echo "F18 install app ver: $VER, dat: $DAT"
-echo "F18 lin installacija ...."
 
+echo "F18 install app ver: $VER, dat: $DAT"
+echo "---------------------------------------------------"
 
 
 echo "F18 req."
@@ -25,51 +27,67 @@ winetricks -q  riched20
 
 echo " postoji li F18 install dir"
 
-if [ -d $F18INSTALL ]; then
+if [ -d $F18_ISTALL ]; then
 
 	echo "F18 instalaciona lokacija postoji, nastavljam" 
 else
         echo "kreiram F18 install dir"
- 	mkdir -p  $F18INSTALL
+ 	mkdir -p  $F18_ISTALL
 fi
 
 echo " instaliram F18"
 
-mkdir tmp 
-cd tmp 
+TMP_DIR=/tmp
+CUR_DIR=`pwd`
+
 
 #wget -N http://knowhow-erp-f18.googlecode.com/files/F18_Ubuntu_"$ARCH"_"$F18_VER".gz
-wget -N http://knowhow-erp-f18.googlecode.com/files/delphirb_$DELRB_VER.gz
-wget -N http://knowhow-erp-f18.googlecode.com/files/ptxt_$PTXT_VER.gz
 
-wget -N http://knowhow-erp-f18.googlecode.com/files/ptxt_fonts.tar.bz2
+DOWNLOAD_DIR=~/Downloads
+mkdir -p $DOWNLOAD_DIR
 
-bunzip2 ptxt_fonts.tar.bz2
-tar xvf ptxt_fonts.tar
+cd $DOWNLOAD_DIR
 
-gzip -dNf ptxt_$PTXT_VER.gz
-gzip -dNf delphirb_$DELRB_VER.gz
+D_FILE=delphirb_$DELRB_VER.gz
+wget -N http://knowhow-erp-f18.googlecode.com/files/$D_FILE
+cp -av $D_FILE $TMP_DIR
+
+D_FILE=ptxt_$PTXT_VER.gz
+wget -N http://knowhow-erp-f18.googlecode.com/files/$D_FILE
+cp -av $D_FILE $TMP_DIR
+
+D_FILE=ptxt_fonts.tar.bz2
+wget -N http://knowhow-erp-f18.googlecode.com/files/
+cp -av $D_FILE $TMP_DIR
+
 #gzip -dN F18_Ubuntu_"$ARCH"_"$F18_VER".gz
 
-cp F18 $F18INSTALL
-chmod +x $F18INSTALL/F18
-cd ..
+#cp F18 $F18_ISTALL
+#chmod +x $F18_ISTALL/F18
+#cd ..
 
 echo "kopiram utils" 
 
-cp -av util/ptxt  $F18INSTALL
-cp -av tmp/ptxt.exe ~/.wine/drive_c/
-cp -av tmp/delphirb.exe ~/.wine/drive_c/
+cd $CUR_DIR
+cp -av util/ptxt  $F18_ISTALL
+cp -av util/F18_update  $F18_ISTALL
+cp -av util/f18_editor $F18_ISTALL
 
 
-cp -av util/F18_update  $F18INSTALL
-cp -av util/f18_editor $F18INSTALL
+cd $TMP_DIR
+gzip -dNf ptxt_$PTXT_VER.gz
+gzip -dNf delphirb_$DELRB_VER.gz
 
+bunzip2 -f ptxt_fonts.tar.bz2
+tar xvf ptxt_fonts.tar
+
+cp -av ptxt.exe ~/.wine/drive_c/
+cp -av delphirb.exe ~/.wine/drive_c/
 
 cp -av fonts/ptxt_fonts/*.ttf  ~/.wine/drive_c/windows/Fonts/
 
-chmod +x $F18INSTALL/ptxt
-chmod +x $F18INSTALL/f18_editor
+chmod +x $F18_ISTALL/ptxt
+chmod +x $F18_ISTALL/f18_editor
 
 #echo ".....OK zavrsio sa kopiranjem"
 
@@ -81,4 +99,7 @@ chmod +x $F18INSTALL/f18_editor
 #echo "F18 instalacija zavrsena, pokrecemo iz terminala sa F18 "
 
 
+ls  -l ~/.wine/drive_c
+ls  -l ~/.wine/drive_c/windows/Fonts
+ls  -l $F18_INSTALL
 
