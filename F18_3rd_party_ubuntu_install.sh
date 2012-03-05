@@ -16,12 +16,11 @@ echo "F18 req."
 
 #sudo apt-get update
 #sudo apt-get install libqt4-sql-psql
-#sudo apt-get install wine
-#sudo apt-get install vim-gtk
-#sudo apt-get install wget 
-wget -N http://winetricks.org/winetricks 
-chmod +x winetricks
-sh winetricks -q  riched20
+
+sudo apt-get -y install wine winetrics
+sudo apt-get -y install vim-gtk
+sudo apt-get -y install wget 
+winetricks -q  riched20
 
 
 echo " postoji li F18 install dir"
@@ -45,7 +44,7 @@ wget -N http://knowhow-erp-f18.googlecode.com/files/ptxt_$PTXT_VER.gz
 
 gzip -dN ptxt_$PTXT_VER.gz
 gzip -dN delphirb_$DELRB_VER.gz
-gzip -dN F18_Ubuntu_"$ARCH"_"$F18_VER".gz
+#gzip -dN F18_Ubuntu_"$ARCH"_"$F18_VER".gz
 
 cp F18 $F18INSTALL
 chmod +x $F18INSTALL/F18
@@ -63,14 +62,14 @@ chmod +x $F18INSTALL/F18_ubuntu_update
 chmod +x $F18INSTALL/PTXT
 chmod +x $F18INSTALL/f18_editor
 
-echo ".....OK zavrsio sa kopiranjem"
+#echo ".....OK zavrsio sa kopiranjem"
 
-echo "setujem envars"
+#echo "setujem envars"
 
-echo export PATH=\$PATH:~/bin >> ~/.bash_profile
-echo ""
-echo ""
-echo "F18 instalacija zavrsena, pokrecemo iz terminala sa F18 "
+#echo export PATH=\$PATH:~/bin >> ~/.bash_profile
+#echo ""
+#echo ""
+#echo "F18 instalacija zavrsena, pokrecemo iz terminala sa F18 "
 
 
 
