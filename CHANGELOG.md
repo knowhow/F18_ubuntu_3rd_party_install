@@ -1,3 +1,7 @@
+0.2.0  2012-03-05, hernad
+   
+  - krpaza, da bar nesto radi
+
 0.1.0  2011-12-14, bjasko, init
 
   - [#25555](http://redmine.bring.out.ba/issues/25555)

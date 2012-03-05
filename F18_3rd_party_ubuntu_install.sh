@@ -42,6 +42,11 @@ cd tmp
 wget -N http://knowhow-erp-f18.googlecode.com/files/delphirb_$DELRB_VER.gz
 wget -N http://knowhow-erp-f18.googlecode.com/files/ptxt_$PTXT_VER.gz
 
+wget -N http://knowhow-erp-f18.googlecode.com/files/ptxt_fonts.tar.bz2
+
+bunzip2 ptxt_fonts.tar.bz2
+tar xvf ptxt_fonts.tar
+
 gzip -dNf ptxt_$PTXT_VER.gz
 gzip -dNf delphirb_$DELRB_VER.gz
 #gzip -dN F18_Ubuntu_"$ARCH"_"$F18_VER".gz
@@ -55,9 +60,13 @@ echo "kopiram utils"
 cp -av util/ptxt  $F18INSTALL
 cp -av tmp/ptxt.exe ~/.wine/drive_c/
 cp -av tmp/delphirb.exe ~/.wine/drive_c/
+
+
+cp -av util/F18_update  $F18INSTALL
+cp -av util/f18_editor $F18INSTALL
+
+
 cp -av fonts/ptxt_fonts/*.ttf  ~/.wine/drive_c/windows/Fonts/
-cp -av util/F18_ubuntu_update  $F18INSTALL
-cp util/f18_editor $F18INSTALL
 
 chmod +x $F18INSTALL/ptxt
 chmod +x $F18INSTALL/f18_editor
