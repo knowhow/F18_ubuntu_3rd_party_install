@@ -42,8 +42,8 @@ cd tmp
 wget -N http://knowhow-erp-f18.googlecode.com/files/delphirb_$DELRB_VER.gz
 wget -N http://knowhow-erp-f18.googlecode.com/files/ptxt_$PTXT_VER.gz
 
-gzip -dN ptxt_$PTXT_VER.gz
-gzip -dN delphirb_$DELRB_VER.gz
+gzip -dNf ptxt_$PTXT_VER.gz
+gzip -dNf delphirb_$DELRB_VER.gz
 #gzip -dN F18_Ubuntu_"$ARCH"_"$F18_VER".gz
 
 cp F18 $F18INSTALL
@@ -52,14 +52,14 @@ cd ..
 
 echo "kopiram utils" 
 
-cp util/ptxt  $F18INSTALL
-cp tmp/ptxt.exe ~/.wine/drive_c/
-cp tmp/delphirb.exe ~/.wine/drive_c/
-cp fonts/ptxt_fonts/*.ttf  ~/.wine/drive_c/windows/Fonts/
-cp util/F18_ubuntu_update  $F18INSTALL
+cp -av util/ptxt  $F18INSTALL
+cp -av tmp/ptxt.exe ~/.wine/drive_c/
+cp -av tmp/delphirb.exe ~/.wine/drive_c/
+cp -av fonts/ptxt_fonts/*.ttf  ~/.wine/drive_c/windows/Fonts/
+cp -av util/F18_ubuntu_update  $F18INSTALL
 cp util/f18_editor $F18INSTALL
-chmod +x $F18INSTALL/F18_ubuntu_update
-chmod +x $F18INSTALL/PTXT
+
+chmod +x $F18INSTALL/ptxt
 chmod +x $F18INSTALL/f18_editor
 
 #echo ".....OK zavrsio sa kopiranjem"
