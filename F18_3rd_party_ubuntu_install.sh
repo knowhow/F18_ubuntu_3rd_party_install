@@ -38,7 +38,7 @@ echo " instaliram F18"
 mkdir tmp 
 cd tmp 
 
-wget -N http://knowhow-erp-f18.googlecode.com/files/F18_Ubuntu_"$ARCH"_"$F18_VER".gz
+#wget -N http://knowhow-erp-f18.googlecode.com/files/F18_Ubuntu_"$ARCH"_"$F18_VER".gz
 wget -N http://knowhow-erp-f18.googlecode.com/files/delphirb_$DELRB_VER.gz
 wget -N http://knowhow-erp-f18.googlecode.com/files/ptxt_$PTXT_VER.gz
 
