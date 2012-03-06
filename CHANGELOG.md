@@ -1,3 +1,7 @@
+0.3.0  2012-03-05, hernad
+  
+ - krpaza za chef F18 denv 
+
 0.2.0  2012-03-05, hernad
    
   - krpaza, da bar nesto radi
