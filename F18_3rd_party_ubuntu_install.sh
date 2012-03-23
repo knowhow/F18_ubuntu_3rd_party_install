@@ -1,7 +1,7 @@
 #!/bin/bash
 
-VER=0.3.0
-DAT=06.03.2012
+VER=0.5.0
+DAT=22.03.2012
 
 
 F18_ISTALL=/opt/knowhowERP/util
@@ -58,6 +58,10 @@ wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=ptxt_fonts.tar.bz2
+wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
+cp -av $D_FILE $TMP_DIR
+
+D_FILE=adslocal.tar.bz2
 wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
 cp -av $D_FILE $TMP_DIR
 
