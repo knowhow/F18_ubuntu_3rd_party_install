@@ -1,3 +1,7 @@
+0.5.0  2012-03-22, hernad
+
+  - adslocal.tar.bz2 
+
 0.3.0  2012-03-05, hernad
   
  - krpaza za chef F18 denv 
