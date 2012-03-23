@@ -39,7 +39,8 @@ echo " instaliram F18"
 
 CUR_DIR=`pwd`
 
-TMP_DIR=/tmp
+TMP_DIR=/tmp/knowhowERP
+mkdir -p $TMP_DIR
 
 
 #wget -N http://knowhow-erp-f18.googlecode.com/files/F18_Ubuntu_"$ARCH"_"$F18_VER".gz
