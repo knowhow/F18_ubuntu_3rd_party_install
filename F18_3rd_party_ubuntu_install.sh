@@ -14,6 +14,23 @@ echo "F18 install app ver: $VER, dat: $DAT"
 echo "---------------------------------------------------"
 
 
+
+DIR=/opt/knowhowERP/util
+sudo mkdir -p $DIR
+sudo chown $USER.$USER $DIR
+
+
+DIR=/opt/knowhowERP/lib
+sudo mkdir -p $DIR
+sudo chown $USER.$USER $DIR
+
+
+DIR=/opt/knowhowERP/bin
+sudo mkdir -p $DIR
+sudo chown $USER.$USER $DIR
+
+
+
 echo "F18 req."
 
 #sudo apt-get update
