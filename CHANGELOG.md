@@ -1,3 +1,7 @@
+0.5.1  2012-03-22, hernad
+
+  - bunzip2 adslocal u ~/.wine/drive_c
+
 0.5.0  2012-03-22, hernad
 
   - adslocal.tar.bz2 

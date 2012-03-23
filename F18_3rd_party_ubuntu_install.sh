@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VER=0.5.0
+VER=0.5.1
 DAT=22.03.2012
 
 
@@ -77,6 +77,11 @@ gzip -dNf delphirb_$DELRB_VER.gz
 
 bunzip2 -f ptxt_fonts.tar.bz2
 tar xvf ptxt_fonts.tar
+
+bunzip2 -f adslocal.tar.bz2
+tar xvf adslocal.tar
+
+cp -av lib/* ~/.wine/drive_c/
 
 cp -av ptxt.exe ~/.wine/drive_c/
 cp -av delphirb.exe ~/.wine/drive_c/
