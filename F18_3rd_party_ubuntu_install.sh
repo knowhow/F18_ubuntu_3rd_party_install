@@ -1,7 +1,7 @@
 #!/bin/bash
 
-VER=0.5.1
-DAT=22.03.2012
+VER=0.6.0
+DAT=24.03.2012
 
 
 F18_ISTALL=/opt/knowhowERP/util
@@ -9,6 +9,7 @@ ARCH=`uname -m`
 DELRB_VER="1.0"
 PTXT_VER="1.55"
 F18_VER="0.9.18"
+HBOUT_VER="3.1.0"
 
 echo "F18 install app ver: $VER, dat: $DAT"
 echo "---------------------------------------------------"
@@ -83,6 +84,11 @@ D_FILE=adslocal.tar.bz2
 wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
 cp -av $D_FILE $TMP_DIR
 
+D_FILE=harbour_ubuntu_${ARCH}_${HBOUT_VER}.tar.bz2
+wget -nc http://knowhow-erp.googlecode.com/files/$D_FILE
+cp -av $D_FILE $TMP_DIR
+
+
 echo "kopiram utils" 
 
 cd $CUR_DIR
@@ -105,6 +111,11 @@ cp -av ptxt.exe ~/.wine/drive_c/
 cp -av delphirb.exe ~/.wine/drive_c/
 
 cp -av ptxt_fonts/*.ttf  ~/.wine/drive_c/windows/Fonts/
+
+F_NAME=harbour_ubuntu_${ARCH}_${HBOUT_VER}
+bunzip2 -f $F_NAME.tar.bz2
+tar xvf $F_NAME.tar
+mv hbout /opt/knowhowERP/
 
 chmod +x $F18_ISTALL/ptxt
 chmod +x $F18_ISTALL/f18_editor

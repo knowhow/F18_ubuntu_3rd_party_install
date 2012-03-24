@@ -1,3 +1,7 @@
+0.6.0  2012-03-24, hernad
+
+  - hbout
+
 0.5.2  2012-03-22, hernad
   
   - delphirb napokon radi
