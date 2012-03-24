@@ -14,7 +14,14 @@ HBOUT_VER="3.1.0"
 echo "F18 install app ver: $VER, dat: $DAT"
 echo "---------------------------------------------------"
 
+INSTALL_HBOUT=0
 
+PARAM=$1
+
+if [ "$PARAM" = "--hbout" ]
+then
+   INSTALL_HBOUT=1
+fi
 
 DIR=/opt/knowhowERP/util
 sudo mkdir -p $DIR
@@ -84,9 +91,12 @@ D_FILE=adslocal.tar.bz2
 wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
 cp -av $D_FILE $TMP_DIR
 
-D_FILE=harbour_ubuntu_${ARCH}_${HBOUT_VER}.tar.bz2
-wget -nc http://knowhow-erp.googlecode.com/files/$D_FILE
-cp -av $D_FILE $TMP_DIR
+if [[ $INSTALL_HBOUT -eq 1 ]]
+then
+  D_FILE=harbour_ubuntu_${ARCH}_${HBOUT_VER}.tar.bz2
+  wget -nc http://knowhow-erp.googlecode.com/files/$D_FILE
+  cp -av $D_FILE $TMP_DIR
+fi
 
 
 echo "kopiram utils" 
@@ -112,10 +122,13 @@ cp -av delphirb.exe ~/.wine/drive_c/
 
 cp -av ptxt_fonts/*.ttf  ~/.wine/drive_c/windows/Fonts/
 
-F_NAME=harbour_ubuntu_${ARCH}_${HBOUT_VER}
-bunzip2 -f $F_NAME.tar.bz2
-tar xvf $F_NAME.tar
-mv hbout /opt/knowhowERP/
+if [[ $INSTALL_HBOUT -eq 1 ]]
+then
+   F_NAME=harbour_ubuntu_${ARCH}_${HBOUT_VER}
+   bunzip2 -f $F_NAME.tar.bz2
+   tar xvf $F_NAME.tar
+   mv hbout /opt/knowhowERP/
+fi
 
 chmod +x $F18_ISTALL/ptxt
 chmod +x $F18_ISTALL/f18_editor
