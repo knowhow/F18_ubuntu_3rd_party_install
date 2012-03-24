@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VER=0.6.0
+VER=0.7.0
 DAT=24.03.2012
 
 
@@ -37,6 +37,8 @@ DIR=/opt/knowhowERP/bin
 sudo mkdir -p $DIR
 sudo chown $USER.$USER $DIR
 
+
+sudo cp -av profile.d/F18_knowhowERP.sh /etc/profile.d/
 
 
 echo "F18 req."
@@ -128,6 +130,7 @@ then
    bunzip2 -f $F_NAME.tar.bz2
    tar xvf $F_NAME.tar
    mv hbout /opt/knowhowERP/
+   sudo chown -R $USER.$USER /opt/knowhowERP/hbout
 fi
 
 chmod +x $F18_ISTALL/ptxt

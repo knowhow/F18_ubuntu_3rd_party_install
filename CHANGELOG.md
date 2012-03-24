@@ -1,3 +1,7 @@
+0.7.0  2012-03-24, hernad
+
+  - /etc/profile.d/ PATH
+
 0.6.0  2012-03-24, hernad
 
   - hbout
