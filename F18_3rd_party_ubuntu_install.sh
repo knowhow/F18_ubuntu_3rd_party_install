@@ -98,34 +98,34 @@ mkdir -p $DOWNLOAD_DIR
 cd $DOWNLOAD_DIR
 
 D_FILE=F18_Ubuntu_${ARCH}_${F18_VER}.gz
-wget -nc $GCODE_URL_ROOT_F18/$D_FILE
+wget -q -nc $GCODE_URL_ROOT_F18/$D_FILE
 echo wget $D_FILE , exit $? >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=delphirb_$DELRB_VER.gz
-wget -nc $GCODE_URL_ROOT_F18/$D_FILE
+wget -q -nc $GCODE_URL_ROOT_F18/$D_FILE
 echo wget $D_FILE , exit $? >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=ptxt_$PTXT_VER.gz
-wget -nc $GCODE_URL_ROOT_F18/$D_FILE
+wget -q -nc $GCODE_URL_ROOT_F18/$D_FILE
 echo wget $D_FILE , exit $? >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=ptxt_fonts.tar.bz2
-wget -nc $GCODE_URL_ROOT_F18/$D_FILE
+wget -q -nc $GCODE_URL_ROOT_F18/$D_FILE
 echo wget $D_FILE , exit $? >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=adslocal.tar.bz2
-wget -nc $GCODE_URL_ROOT_F18/$D_FILE
+wget -q -nc $GCODE_URL_ROOT_F18/$D_FILE
 echo wget $D_FILE , exit $? >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 if [[ $INSTALL_HBOUT -eq 1 ]]
 then
   D_FILE=harbour_ubuntu_${ARCH}_${HBOUT_VER}.tar.bz2
-  wget -nc $GCODE_URL_ROOT/$D_FILE
+  wget -q -nc $GCODE_URL_ROOT/$D_FILE
   echo wget $D_FILE , exit $? >> $LOG_F
   cp -av $D_FILE $TMP_DIR
 fi
@@ -142,10 +142,10 @@ gzip -dNf ptxt_$PTXT_VER.gz
 gzip -dNf delphirb_$DELRB_VER.gz
 
 bunzip2 -f ptxt_fonts.tar.bz2
-tar xvf ptxt_fonts.tar
+tar xf ptxt_fonts.tar
 
 bunzip2 -f adslocal.tar.bz2
-tar xvf adslocal.tar
+tar xf adslocal.tar
 
 sudo cp -av lib/* ~/.wine/drive_c/
 
@@ -166,7 +166,7 @@ if [[ $INSTALL_HBOUT -eq 1 ]]
 then
    F_NAME=harbour_ubuntu_${ARCH}_${HBOUT_VER}
    bunzip2 -f $F_NAME.tar.bz2
-   tar xvf $F_NAME.tar
+   tar xf $F_NAME.tar
    sudo mv hbout /opt/knowhowERP/
    sudo chown -R $OWNER.$OWNER $F18_INSTALL_ROOT/hbout
 fi
