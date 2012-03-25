@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VER=0.7.5
+VER=0.8.0
 DAT=25.03.2012
 
 
@@ -15,7 +15,9 @@ HBOUT_VER="3.1.0"
 TMP_DIR=/tmp/knowhowERP
 mkdir -p $TMP_DIR
 
-OWNER=`logname`
+#OWNER=`logname`
+OWNER=`who am i | awk '{print $1}'`
+
 LOG_F=$TMP_DIR/F18_3rd.log
 
 echo `date` > $LOG_F
