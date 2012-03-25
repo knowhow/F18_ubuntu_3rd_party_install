@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VER=0.8.0
+VER=0.8.1
 DAT=25.03.2012
 
 
@@ -23,6 +23,8 @@ LOG_F=$TMP_DIR/F18_3rd.log
 echo `date` > $LOG_F
 echo ------------------------------------------- >> $LOG_F
 echo PATH=$PATH >> $LOG_F
+echo TMP_DIR=$TMP_DIR >> $LOG_F
+echo `logname` >>  $LOG_F
 echo HOME=$HOME, OWNER=$OWNER, USER=$USER >> $LOG_F
 
 
