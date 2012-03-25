@@ -1,10 +1,10 @@
 #!/bin/bash
 
-VER=0.9.5
+VER=1.0.0
 DAT=25.03.2012
 
 
-F18_ISTALL_ROOT=/opt/knowhowERP
+F18_INSTALL_ROOT=/opt/knowhowERP
 
 ARCH=`uname -m`
 DELRB_VER="1.0"
@@ -74,10 +74,16 @@ sudo cp -av profile.d/F18_knowhowERP.sh /etc/profile.d/
 
 echo "F18 req."
 
-sudo apt-get -y install libqt4-sql-psql
-sudo apt-get -y install wine winetricks
-sudo apt-get -y install vim-gtk
-sudo apt-get -y install wget 
+PACKAGES="wget libqt4-sql-psql wine winetricks vim-gtk"
+
+for PKG in $PACKAGES
+do
+
+sudo apt-get -y install $PKG
+echo apt-get install $PKG, exit=$?
+
+done
+
 winetricks -q  riched20
 
 
@@ -126,7 +132,7 @@ fi
 echo "kopiram utils" 
 
 cd $CUR_DIR
-sudo cp -av util/* $F18_ISTALL
+sudo cp -av util/* $F18_INSTALL_ROOT
 
 
 cd $TMP_DIR
@@ -148,8 +154,11 @@ cp -av ptxt_fonts/*.ttf  ~/.wine/drive_c/windows/Fonts/
 
 FILE=F18_Ubuntu_${ARCH}_${F18_VER}
 gzip -dNf $FILE.gz
+
 cp -av F18 $F18_INSTALL_ROOT/bin/
 chmod +x $F18_INSTALL_ROOT/bin/F18
+
+echo cp F18, exit=$? >> $LOG_F 
 
 if [[ $INSTALL_HBOUT -eq 1 ]]
 then
@@ -160,8 +169,8 @@ then
    sudo chown -R $OWNER.$OWNER /opt/knowhowERP/hbout
 fi
 
-sudo chmod +x $F18_ISTALL/ptxt
-sudo chmod +x $F18_ISTALL/f18_editor
+chmod +x $F18_INSTALL_ROOT/util/*
+chmod +x $F18_INSTALL_ROOT/bin/*
 
 
 echo " "
