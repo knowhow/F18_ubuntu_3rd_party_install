@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VER=1.0.1
+VER=1.0.2
 DAT=25.03.2012
 
 
@@ -12,6 +12,8 @@ PTXT_VER="1.55"
 F18_VER="0.9.66"
 HBOUT_VER="3.1.0"
 
+GCODE_URL_ROOT_F18=http://knowhow-erp-f18.googlecode.com/files
+GCODE_URL_ROOT=http://knowhow-erp.googlecode.com/files
 
 CUR_DIR=`pwd`
 
@@ -96,34 +98,34 @@ mkdir -p $DOWNLOAD_DIR
 cd $DOWNLOAD_DIR
 
 D_FILE=F18_Ubuntu_${ARCH}_${F18_VER}.gz
-wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
+wget -nc $GCODE_URL_ROOT_F18/$D_FILE
 echo wget $D_FILE , exit $? >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=delphirb_$DELRB_VER.gz
-wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
+wget -nc $GCODE_URL_ROOT_F18/$D_FILE
 echo wget $D_FILE , exit $? >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=ptxt_$PTXT_VER.gz
-wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
+wget -nc $GCODE_URL_ROOT_F18/$D_FILE
 echo wget $D_FILE , exit $? >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=ptxt_fonts.tar.bz2
-wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
+wget -nc $GCODE_URL_ROOT_F18/$D_FILE
 echo wget $D_FILE , exit $? >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=adslocal.tar.bz2
-wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
+wget -nc $GCODE_URL_ROOT_F18/$D_FILE
 echo wget $D_FILE , exit $? >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 if [[ $INSTALL_HBOUT -eq 1 ]]
 then
   D_FILE=harbour_ubuntu_${ARCH}_${HBOUT_VER}.tar.bz2
-  wget -nc http://knowhow-erp.googlecode.com/files/$D_FILE
+  wget -nc $GCODE_URL_ROOT/$D_FILE
   echo wget $D_FILE , exit $? >> $LOG_F
   cp -av $D_FILE $TMP_DIR
 fi
@@ -132,7 +134,7 @@ fi
 echo "kopiram utils" 
 
 cd $CUR_DIR
-sudo cp -av util/* $F18_INSTALL_ROOT
+sudo cp -av util/* $F18_INSTALL_ROOT/util
 
 
 cd $TMP_DIR
@@ -166,7 +168,7 @@ then
    bunzip2 -f $F_NAME.tar.bz2
    tar xvf $F_NAME.tar
    sudo mv hbout /opt/knowhowERP/
-   sudo chown -R $OWNER.$OWNER /opt/knowhowERP/hbout
+   sudo chown -R $OWNER.$OWNER $F18_INSTALL_ROOT/hbout
 fi
 
 chmod +x $F18_INSTALL_ROOT/util/*
@@ -186,8 +188,15 @@ echo ---------------------------------------
 ls -l $DIR
 
 echo " "
-DIR=/opt/knowhowERP/util
+DIR=$F18_INSTALL_ROOT/util
 echo $DIR
 echo ---------------------------------------
 ls -l $DIR
+
+echo " "
+DIR=$F18_INSTALL_ROOT/bin
+echo $DIR
+echo ---------------------------------------
+ls -l $DIR
+
 
