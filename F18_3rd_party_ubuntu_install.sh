@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VER=0.8.1
+VER=0.8.3
 DAT=25.03.2012
 
 
@@ -12,11 +12,21 @@ PTXT_VER="1.55"
 F18_VER="0.9.66"
 HBOUT_VER="3.1.0"
 
+
+CUR_DIR=`pwd`
+echo CUR_DIR=$CUR_DIR >> $LOG_F
+
 TMP_DIR=/tmp/knowhowERP
 mkdir -p $TMP_DIR
 
 #OWNER=`logname`
-OWNER=`who am i | awk '{print $1}'`
+#OWNER=`who am i | awk '{print $1}'`
+
+if [[ "$USER" == "root" ]]; then
+   OWNER=$SUDO_USER
+else
+   OWNER=$USER
+fi
 
 LOG_F=$TMP_DIR/F18_3rd.log
 
@@ -24,7 +34,6 @@ echo `date` > $LOG_F
 echo ------------------------------------------- >> $LOG_F
 echo PATH=$PATH >> $LOG_F
 echo TMP_DIR=$TMP_DIR >> $LOG_F
-echo `logname` >>  $LOG_F
 echo HOME=$HOME, OWNER=$OWNER, SUDO_USER=$SUDO_USER, USER=$USER >> $LOG_F
 
 
@@ -75,10 +84,6 @@ winetricks -q  riched20
 echo " postoji li F18 install dir"
 
 echo " instaliram F18"
-
-CUR_DIR=`pwd`
-
-
 DOWNLOAD_DIR=~/Downloads
 mkdir -p $DOWNLOAD_DIR
 
@@ -86,28 +91,33 @@ cd $DOWNLOAD_DIR
 
 D_FILE=F18_Ubuntu_$ARCH_$F18_VER.gz
 wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
-
+echo wget $D_FILE >> $LOG_F
 
 D_FILE=delphirb_$DELRB_VER.gz
 wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
+echo wget $D_FILE >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=ptxt_$PTXT_VER.gz
 wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
+echo wget $D_FILE >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=ptxt_fonts.tar.bz2
 wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
+echo wget $D_FILE >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=adslocal.tar.bz2
 wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
+echo wget $D_FILE >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 if [[ $INSTALL_HBOUT -eq 1 ]]
 then
   D_FILE=harbour_ubuntu_${ARCH}_${HBOUT_VER}.tar.bz2
   wget -nc http://knowhow-erp.googlecode.com/files/$D_FILE
+  echo wget $D_FILE >> $LOG_F
   cp -av $D_FILE $TMP_DIR
 fi
 
