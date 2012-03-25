@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VER=0.9.0
+VER=0.9.5
 DAT=25.03.2012
 
 
@@ -89,36 +89,36 @@ mkdir -p $DOWNLOAD_DIR
 
 cd $DOWNLOAD_DIR
 
-D_FILE=F18_Ubuntu_$ARCH_$F18_VER.gz
+D_FILE=F18_Ubuntu_${ARCH}_${F18_VER}.gz
 wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
-echo wget $D_FILE >> $LOG_F
+echo wget $D_FILE , exit $? >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=delphirb_$DELRB_VER.gz
 wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
-echo wget $D_FILE >> $LOG_F
+echo wget $D_FILE , exit $? >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=ptxt_$PTXT_VER.gz
 wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
-echo wget $D_FILE >> $LOG_F
+echo wget $D_FILE , exit $? >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=ptxt_fonts.tar.bz2
 wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
-echo wget $D_FILE >> $LOG_F
+echo wget $D_FILE , exit $? >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 D_FILE=adslocal.tar.bz2
 wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
-echo wget $D_FILE >> $LOG_F
+echo wget $D_FILE , exit $? >> $LOG_F
 cp -av $D_FILE $TMP_DIR
 
 if [[ $INSTALL_HBOUT -eq 1 ]]
 then
   D_FILE=harbour_ubuntu_${ARCH}_${HBOUT_VER}.tar.bz2
   wget -nc http://knowhow-erp.googlecode.com/files/$D_FILE
-  echo wget $D_FILE >> $LOG_F
+  echo wget $D_FILE , exit $? >> $LOG_F
   cp -av $D_FILE $TMP_DIR
 fi
 
@@ -146,7 +146,7 @@ cp -av delphirb.exe ~/.wine/drive_c/
 
 cp -av ptxt_fonts/*.ttf  ~/.wine/drive_c/windows/Fonts/
 
-FILE=F18_Ubuntu_$ARCH_$F18_VER
+FILE=F18_Ubuntu_${ARCH}_${F18_VER}
 gzip -dNf $FILE.gz
 cp -av F18 $F18_INSTALL_ROOT/bin/
 chmod +x $F18_INSTALL_ROOT/bin/F18
