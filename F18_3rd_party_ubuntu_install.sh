@@ -25,7 +25,7 @@ echo ------------------------------------------- >> $LOG_F
 echo PATH=$PATH >> $LOG_F
 echo TMP_DIR=$TMP_DIR >> $LOG_F
 echo `logname` >>  $LOG_F
-echo HOME=$HOME, OWNER=$OWNER, USER=$USER >> $LOG_F
+echo HOME=$HOME, OWNER=$OWNER, SUDO_USER=$SUDO_USER, USER=$USER >> $LOG_F
 
 
 echo "F18 install app ver: $VER, dat: $DAT"
