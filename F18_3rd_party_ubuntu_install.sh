@@ -20,6 +20,7 @@ LOG_F=$TMP_DIR/F18_3rd.log
 
 echo `date` > $LOG_F
 echo ------------------------------------------- >> $LOG_F
+echo PATH=$PATH >> $LOG_F
 echo HOME=$HOME, OWNER=$OWNER, USER=$USER >> $LOG_F
 
 
