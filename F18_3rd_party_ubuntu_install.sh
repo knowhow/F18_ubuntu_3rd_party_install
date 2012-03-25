@@ -1,10 +1,10 @@
 #!/bin/bash
 
-VER=0.7.0
-DAT=24.03.2012
+VER=0.7.5
+DAT=25.03.2012
 
 
-F18_ISTALL=/opt/knowhowERP/util
+F18_ISTALL_ROOT=/opt/knowhowERP
 
 ARCH=`uname -m`
 DELRB_VER="1.0"
@@ -24,17 +24,17 @@ then
    INSTALL_HBOUT=1
 fi
 
-DIR=/opt/knowhowERP/util
+DIR=$F18_INSTALL_ROOT/util
 sudo mkdir -p $DIR
 sudo chown $USER.$USER $DIR
 
 
-DIR=/opt/knowhowERP/lib
+DIR=$F18_INSTALL_ROOT/lib
 sudo mkdir -p $DIR
 sudo chown $USER.$USER $DIR
 
 
-DIR=/opt/knowhowERP/bin
+DIR=$F18_INSTALL_ROOT/bin
 sudo mkdir -p $DIR
 sudo chown $USER.$USER $DIR
 
@@ -120,8 +120,8 @@ cp -av ptxt_fonts/*.ttf  ~/.wine/drive_c/windows/Fonts/
 
 FILE=F18_Ubuntu_$ARCH_$F18_VER
 gzip -dNf $FILE.gz
-cp -av F18 /opt/knowhowERP/bin/
-chmod +x /opt/knowhowERP/bin/F18
+cp -av F18 $F18_INSTALL_ROOT/bin/
+chmod +x $F18_INSTALL_ROOT/bin/F18
 
 if [[ $INSTALL_HBOUT -eq 1 ]]
 then
