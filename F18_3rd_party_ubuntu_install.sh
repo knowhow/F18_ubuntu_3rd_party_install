@@ -15,11 +15,12 @@ HBOUT_VER="3.1.0"
 TMP_DIR=/tmp/knowhowERP
 mkdir -p $TMP_DIR
 
+OWNER=`logname`
 LOG_F=$TMP_DIR/F18_3rd.log
 
 echo `date` > $LOG_F
 echo ------------------------------------------- >> $LOG_F
-echo HOME=$HOME, USER=$USER >> $LOG_F
+echo HOME=$HOME, OWNER=$OWNER, USER=$USER >> $LOG_F
 
 
 echo "F18 install app ver: $VER, dat: $DAT"
@@ -38,19 +39,21 @@ fi
 
 DIR=$F18_INSTALL_ROOT/util
 sudo mkdir -p $DIR
-sudo chown $USER.$USER $DIR
+sudo chown $OWNER.$OWNER $DIR
 
 
 DIR=$F18_INSTALL_ROOT/lib
 sudo mkdir -p $DIR
-sudo chown $USER.$USER $DIR
+sudo chown $OWNER.$OWNER $DIR
 
 
 DIR=$F18_INSTALL_ROOT/bin
 sudo mkdir -p $DIR
-sudo chown $USER.$USER $DIR
+sudo chown $OWNER.$OWNER $DIR
 
-echo `ls -l -r $F18_INSTALL_ROOT` >> $LOG_F 
+echo `ls -l -d $F18_INSTALL_ROOT/bin` >> $LOG_F 
+echo `ls -l -d $F18_INSTALL_ROOT/util` >> $LOG_F 
+echo `ls -l -d $F18_INSTALL_ROOT/lib` >> $LOG_F 
 
 sudo cp -av profile.d/F18_knowhowERP.sh /etc/profile.d/
 
@@ -138,7 +141,7 @@ then
    bunzip2 -f $F_NAME.tar.bz2
    tar xvf $F_NAME.tar
    sudo mv hbout /opt/knowhowERP/
-   sudo chown -R $USER.$USER /opt/knowhowERP/hbout
+   sudo chown -R $OWNER.$OWNER /opt/knowhowERP/hbout
 fi
 
 sudo chmod +x $F18_ISTALL/ptxt
