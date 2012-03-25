@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VER=0.8.4
+VER=0.9.0
 DAT=25.03.2012
 
 
@@ -92,6 +92,7 @@ cd $DOWNLOAD_DIR
 D_FILE=F18_Ubuntu_$ARCH_$F18_VER.gz
 wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
 echo wget $D_FILE >> $LOG_F
+cp -av $D_FILE $TMP_DIR
 
 D_FILE=delphirb_$DELRB_VER.gz
 wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
