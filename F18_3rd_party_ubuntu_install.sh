@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VER=0.8.3
+VER=0.8.4
 DAT=25.03.2012
 
 
@@ -14,7 +14,6 @@ HBOUT_VER="3.1.0"
 
 
 CUR_DIR=`pwd`
-echo CUR_DIR=$CUR_DIR >> $LOG_F
 
 TMP_DIR=/tmp/knowhowERP
 mkdir -p $TMP_DIR
@@ -33,6 +32,7 @@ LOG_F=$TMP_DIR/F18_3rd.log
 echo `date` > $LOG_F
 echo ------------------------------------------- >> $LOG_F
 echo PATH=$PATH >> $LOG_F
+echo CUR_DIR=$CUR_DIR >> $LOG_F
 echo TMP_DIR=$TMP_DIR >> $LOG_F
 echo HOME=$HOME, OWNER=$OWNER, SUDO_USER=$SUDO_USER, USER=$USER >> $LOG_F
 
