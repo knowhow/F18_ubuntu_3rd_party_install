@@ -12,7 +12,19 @@ PTXT_VER="1.55"
 F18_VER="0.9.66"
 HBOUT_VER="3.1.0"
 
+TMP_DIR=/tmp/knowhowERP
+mkdir -p $TMP_DIR
+
+LOG_F=$TMP_DIR/F18_3rd.log
+
+echo `date` > $LOG_F
+echo ------------------------------------------- >> $LOG_F
+echo HOME=$HOME, USER=$USER >> $LOG_F
+
+
 echo "F18 install app ver: $VER, dat: $DAT"
+echo "F18 install app ver: $VER, dat: $DAT" >> $LOG_F
+
 echo "---------------------------------------------------"
 
 INSTALL_HBOUT=0
@@ -38,6 +50,7 @@ DIR=$F18_INSTALL_ROOT/bin
 sudo mkdir -p $DIR
 sudo chown $USER.$USER $DIR
 
+echo `ls -l -r $F18_INSTALL_ROOT` >> $LOG_F 
 
 sudo cp -av profile.d/F18_knowhowERP.sh /etc/profile.d/
 
@@ -56,15 +69,6 @@ echo " postoji li F18 install dir"
 echo " instaliram F18"
 
 CUR_DIR=`pwd`
-
-TMP_DIR=/tmp/knowhowERP
-mkdir -p $TMP_DIR
-
-LOG_F=$TMP_DIR/F18_3rd.log
-
-echo `date` > $LOG_F
-echo ----------------------- >> $LOGF
-echo HOME=$HOME, USER=$USER
 
 
 DOWNLOAD_DIR=~/Downloads
