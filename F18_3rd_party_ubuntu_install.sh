@@ -9,7 +9,7 @@ F18_ISTALL_ROOT=/opt/knowhowERP
 ARCH=`uname -m`
 DELRB_VER="1.0"
 PTXT_VER="1.55"
-F18_VER="0.9.64"
+F18_VER="0.9.66"
 HBOUT_VER="3.1.0"
 
 echo "F18 install app ver: $VER, dat: $DAT"
@@ -60,6 +60,11 @@ CUR_DIR=`pwd`
 TMP_DIR=/tmp/knowhowERP
 mkdir -p $TMP_DIR
 
+LOG_F=$TMP_DIR/F18_3rd.log
+
+echo `date` > $LOG_F
+echo ----------------------- >> $LOGF
+echo HOME=$HOME, USER=$USER
 
 
 DOWNLOAD_DIR=~/Downloads
