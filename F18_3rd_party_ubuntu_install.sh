@@ -5,10 +5,11 @@ DAT=24.03.2012
 
 
 F18_ISTALL=/opt/knowhowERP/util
+
 ARCH=`uname -m`
 DELRB_VER="1.0"
 PTXT_VER="1.55"
-F18_VER="0.9.18"
+F18_VER="0.9.64"
 HBOUT_VER="3.1.0"
 
 echo "F18 install app ver: $VER, dat: $DAT"
@@ -43,9 +44,7 @@ sudo cp -av profile.d/F18_knowhowERP.sh /etc/profile.d/
 
 echo "F18 req."
 
-#sudo apt-get update
-#sudo apt-get install libqt4-sql-psql
-
+sudo apt-get -y install libqt4-sql-psql
 sudo apt-get -y install wine winetricks
 sudo apt-get -y install vim-gtk
 sudo apt-get -y install wget 
@@ -53,14 +52,6 @@ winetricks -q  riched20
 
 
 echo " postoji li F18 install dir"
-
-if [ -d $F18_ISTALL ]; then
-
-	echo "F18 instalaciona lokacija postoji, nastavljam" 
-else
-        echo "kreiram F18 install dir"
- 	mkdir -p  $F18_ISTALL
-fi
 
 echo " instaliram F18"
 
@@ -70,12 +61,15 @@ TMP_DIR=/tmp/knowhowERP
 mkdir -p $TMP_DIR
 
 
-#wget -N http://knowhow-erp-f18.googlecode.com/files/F18_Ubuntu_"$ARCH"_"$F18_VER".gz
 
 DOWNLOAD_DIR=~/Downloads
 mkdir -p $DOWNLOAD_DIR
 
 cd $DOWNLOAD_DIR
+
+D_FILE=F18_Ubuntu_$ARCH_$F18_VER.gz
+wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
+
 
 D_FILE=delphirb_$DELRB_VER.gz
 wget -nc http://knowhow-erp-f18.googlecode.com/files/$D_FILE
@@ -104,7 +98,7 @@ fi
 echo "kopiram utils" 
 
 cd $CUR_DIR
-cp -av util/* $F18_ISTALL
+sudo cp -av util/* $F18_ISTALL
 
 
 cd $TMP_DIR
@@ -117,24 +111,29 @@ tar xvf ptxt_fonts.tar
 bunzip2 -f adslocal.tar.bz2
 tar xvf adslocal.tar
 
-cp -av lib/* ~/.wine/drive_c/
+sudo cp -av lib/* ~/.wine/drive_c/
 
 cp -av ptxt.exe ~/.wine/drive_c/
 cp -av delphirb.exe ~/.wine/drive_c/
 
 cp -av ptxt_fonts/*.ttf  ~/.wine/drive_c/windows/Fonts/
 
+FILE=F18_Ubuntu_$ARCH_$F18_VER
+gzip -dNf $FILE.gz
+cp -av F18 /opt/knowhowERP/bin/
+chmod +x /opt/knowhowERP/bin/F18
+
 if [[ $INSTALL_HBOUT -eq 1 ]]
 then
    F_NAME=harbour_ubuntu_${ARCH}_${HBOUT_VER}
    bunzip2 -f $F_NAME.tar.bz2
    tar xvf $F_NAME.tar
-   mv hbout /opt/knowhowERP/
+   sudo mv hbout /opt/knowhowERP/
    sudo chown -R $USER.$USER /opt/knowhowERP/hbout
 fi
 
-chmod +x $F18_ISTALL/ptxt
-chmod +x $F18_ISTALL/f18_editor
+sudo chmod +x $F18_ISTALL/ptxt
+sudo chmod +x $F18_ISTALL/f18_editor
 
 
 echo " "
