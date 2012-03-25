@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VER=1.0.0
+VER=1.0.1
 DAT=25.03.2012
 
 
@@ -80,7 +80,7 @@ for PKG in $PACKAGES
 do
 
 sudo apt-get -y install $PKG
-echo apt-get install $PKG, exit=$?
+echo apt-get install $PKG, exit=$? >> $LOG_F
 
 done
 
