@@ -1,3 +1,7 @@
+0.7.1  2012-03-28, hernad
+
+ - sudo apt-get update vracen
+
 0.7.0  2012-03-24, hernad
 
   - /etc/profile.d/ PATH

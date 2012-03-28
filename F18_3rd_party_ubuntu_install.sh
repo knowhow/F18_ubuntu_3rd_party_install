@@ -74,6 +74,9 @@ echo `ls -l -d $F18_INSTALL_ROOT/lib` >> $LOG_F
 sudo cp -av profile.d/F18_knowhowERP.sh /etc/profile.d/
 
 
+echo "apt-get update"
+sudo apt-get update
+
 echo "F18 req."
 
 PACKAGES="wget libqt4-sql-psql wine winetricks vim-gtk"
