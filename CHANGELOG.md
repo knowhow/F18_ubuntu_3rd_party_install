@@ -1,6 +1,30 @@
-0.4.0  2012-04-12, hernad
+1.2.0  2012-04-12, hernad
 
  - debug ptxt, f18_editor
+
+0.7.1  2012-03-28, hernad
+
+ - sudo apt-get update vracen
+
+0.7.0  2012-03-24, hernad
+
+  - /etc/profile.d/ PATH
+
+0.6.0  2012-03-24, hernad
+
+  - hbout
+
+0.5.2  2012-03-22, hernad
+  
+  - delphirb napokon radi
+
+0.5.1  2012-03-22, hernad
+
+  - bunzip2 adslocal u ~/.wine/drive_c
+
+0.5.0  2012-03-22, hernad
+
+  - adslocal.tar.bz2 
 
 0.3.0  2012-03-05, hernad
   
