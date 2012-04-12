@@ -1,16 +1,43 @@
 #!/bin/bash
-#0.1.0
-#06.12.2011 
 
-if [[ "$1" == "" ]]; then
+VER=1.2.0
+DAT=12.04.2012
+
+TMP_DIR=/tmp/knowhowERP
+mkdir -p $TMP_DIR
+
+F18_INSTALL_ROOT=/opt/knowhowERP
+
+GCODE_URL_ROOT_F18=http://knowhow-erp-f18.googlecode.com/files
+GCODE_URL_ROOT=http://knowhow-erp.googlecode.com/files
+
+LOG_F=$TMP_DIR/F18_update.log
+
+F18_VER=$1
+SERVICE='F18'
+ARCH=`uname -m`
+
+if [[ "$USER" == "root" ]]; then
+   OWNER=$SUDO_USER
+else
+   OWNER=$USER
+fi
+
+echo "F18 update ver: $VER, dat: $DAT"
+echo "F18 updater ver: $VER, dat: $DAT" >> $LOG_F
+
+echo "---------------------------------------------------"
+
+if [[ "$F18_VER" == "" ]]; then
 echo "niste unijeli verziju koju zelite postaviti, npr 0.9.5"
 exit 0
 fi
  
-NVER=$1
-SERVICE='F18'
-ARCH=`uname -m`
- 
+DOWNLOAD_DIR=~/Downloads
+mkdir -p $DOWNLOAD_DIR
+
+
+
 if ps ax | grep -v grep | grep -w  $SERVICE > /dev/null
 then
     echo "$SERVICE je pokrenut molim da ga zatvorite i ponovite update"
@@ -21,18 +48,37 @@ else
 fi
  
 
+echo " instaliram F18"
 echo -n "pricekajte u toku je download..."
-wget -N http://knowhow-erp-f18.googlecode.com/files/F18_Ubuntu_"$ARCH"_"$NVER".gz
+
+cd $DOWNLOAD_DIR
+D_FILE=F18_Ubuntu_${ARCH}_${F18_VER}.gz
+wget -q -nc $GCODE_URL_ROOT_F18/$D_FILE
+echo wget $D_FILE , exit $? >> $LOG_F
+cp -av $D_FILE $TMP_DIR
 
 echo "ok - zavrseno"
+cd $TMP_DIR
+FILE=F18_Ubuntu_${ARCH}_${F18_VER}
+gzip -dNf $FILE.gz
 
 echo "upgrade"
 
-gzip -dN  F18_Ubuntu_"$ARCH"_"$NVER".gz
+FILE=$F18_INSTALL_ROOT/bin/F18
+mv F18 $FILE
 
-mv F18 ~/bin
-chmod +x ~/bin/F18 
+chmod +x $FILE
+chown $OWNER.$OWNER $FILE
 
 echo "update je zavrsen"
+
+for f in  $F18_INSTALL_ROOT/bin
+do
+  DIR=$f
+  echo $DIR
+  echo ---------------------------------------
+  ls -l $DIR
+  echo " "
+done
 
 

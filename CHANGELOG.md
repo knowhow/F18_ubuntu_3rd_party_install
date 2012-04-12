@@ -1,6 +1,6 @@
 1.2.0  2012-04-12, hernad
 
- - debug ptxt, f18_editor
+ - debug ptxt, f18_editor, F18_update
 
 0.7.1  2012-03-28, hernad
 
