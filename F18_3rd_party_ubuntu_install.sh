@@ -9,7 +9,7 @@ F18_INSTALL_ROOT=/opt/knowhowERP
 ARCH=`uname -m`
 DELRB_VER="1.0"
 PTXT_VER="1.55"
-F18_VER="0.9.81"
+F18_VER="0.9.95"
 HBOUT_VER="3.1.0"
 
 GCODE_URL_ROOT_F18=http://knowhow-erp-f18.googlecode.com/files
@@ -80,7 +80,7 @@ sudo apt-get update
 
 echo "F18 req."
 
-PACKAGES="wget libqt4-sql-psql wine winetricks vim-gtk langpack-si-base"
+PACKAGES="wget libqt4-sql-psql wine winetricks vim-gtk language-pack-sl-base"
 for PKG in $PACKAGES
 do
 
@@ -139,7 +139,7 @@ echo "kopiram utils"
 cd $CUR_DIR
 sudo cp -av util/* $F18_INSTALL_ROOT/util
 
-if [[ !-f ~/.vimrc ]]; then
+if [[ ! -f ~/.vimrc ]]; then
   cp -av util/.vimrc ~/.vimrc
 else
   echo "~/.vimrc postoji, necu ga kopirati"
@@ -162,11 +162,20 @@ cp -av delphirb.exe ~/.wine/drive_c/
 
 cp -av ptxt_fonts/*.ttf  ~/.wine/drive_c/windows/Fonts/
 
+echo " "
+echo "F18 update"
+
 FILE=F18_Ubuntu_${ARCH}_${F18_VER}
 gzip -dNf $FILE.gz
 
-cp -av F18 $F18_INSTALL_ROOT/bin/
-chmod +x $F18_INSTALL_ROOT/bin/F18
+FILE=$F18_INSTALL_ROOT/bin/F18
+if [[ ! -f $FILE ]]; then
+   cp -av F18 $FILE
+   chmod +x $FILE
+else
+   echo $FILE postoji, necu ga kopirati
+fi
+
 
 echo cp F18, exit=$? >> $LOG_F 
 
@@ -183,7 +192,8 @@ chmod +x $F18_INSTALL_ROOT/util/*
 chmod +x $F18_INSTALL_ROOT/bin/*
 
 
-
+echo " "
+echo " "
 for f in ~/.wine/drive_c ~/.wine/drive_c/windows/Fonts $F18_INSTALL_ROOT/util $F18_INSTALL_ROOT/bin
 do
   DIR=$f

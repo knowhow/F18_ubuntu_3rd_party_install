@@ -68,7 +68,7 @@ FILE=$F18_INSTALL_ROOT/bin/F18
 mv F18 $FILE
 
 chmod +x $FILE
-chown $OWNER.$OWNER $FILE
+#chown $OWNER.$OWNER $FILE
 
 echo "update je zavrsen"
 
