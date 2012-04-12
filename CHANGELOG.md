@@ -1,3 +1,7 @@
+0.4.0  2012-04-12, hernad
+
+ - debug ptxt, f18_editor
+
 0.3.0  2012-03-05, hernad
   
  - krpaza za chef F18 denv 

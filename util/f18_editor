@@ -1,10 +1,9 @@
 #!/bin/bash
 
-# mac - mvim
 
-# iconv na mac-u: brew install icon
-
-cat $1 | sed 's/#%.*#//g' | iconv -c -f IBM852 -t UTF-8 > $1.conv.txt
+export NONSPACE=[[1-9A-Z_]]
+cat $1 | sed -e "s/#%[0-9A-Z_]\{5\}#//g" | iconv -c -f IBM852 -t UTF-8 > $1.conv.txt
 
 export BANG=\!  
-gvim -c "nmap <C-P> :exe '$BANG ptxt ' . substitute(@%, '.conv.txt', '', 'y') . ' /p'<CR>" $1.conv.txt
+gvim -c ":set nowrap" -c "nmap <C-P> :exe '$BANG ptxt ' . substitute(@%, '.conv.txt', '', 'y') . ' /p'<CR>" $1.conv.txt
+
