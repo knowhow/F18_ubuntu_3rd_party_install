@@ -1,7 +1,7 @@
 #!/bin/bash
 
-VER=1.2.0
-DAT=12.04.2012
+VER=1.2.1
+DAT=13.04.2012
 
 TMP_DIR=/tmp/knowhowERP
 mkdir -p $TMP_DIR
@@ -16,6 +16,7 @@ LOG_F=$TMP_DIR/F18_update.log
 F18_VER=$1
 F18_TPL=$2
 
+
 SERVICE='F18'
 ARCH=`uname -m`
 
@@ -24,71 +25,77 @@ if [[ "$USER" == "root" ]]; then
 else
    OWNER=$USER
 fi
-
+clear
 echo "F18 update ver: $VER, dat: $DAT"
 echo "F18 updater ver: $VER, dat: $DAT" >> $LOG_F
-
-echo "---------------------------------------------------"
-
-if [[ "$F18_VER" == "" ]]; then
-echo "niste unijeli verziju koju zelite postaviti, npr 0.9.5"
-echo "ukoliko želite instalirati i F18 predloške unesite verziju predloška, npr 1.1.0"
-exit 0
+echo "Broj argumenata: $#"
+if [[ $# == "0" ]]; then
+    echo "---------------------------------------------------"
+    echo "Niste unijeli verziju koju želite postaviti, npr 0.9.5"
+    echo "ukoliko želite instalirati i predloške izvještaja unesite verziju predloška i ključnu riječ template."
+    echo "Npr.: ./F18_update 1.1.0 template"
+    echo "---------------------------------------------------"
+    exit 0
 fi
  
 DOWNLOAD_DIR=~/Downloads
 mkdir -p $DOWNLOAD_DIR
 
+#Ako je broj argumenata jednako jedan uradi sljedeće
+if [[ $# == "1" ]]; then 
 
+    if ps ax | grep -v grep | grep -w  $SERVICE > /dev/null
+    then
+	echo "$SERVICE je pokrenut molim da ga zatvorite i ponovite update"
+	exit 0
+    else
+	echo "$SERVICE nije pokrenut"
+    fi
 
-if ps ax | grep -v grep | grep -w  $SERVICE > /dev/null
-then
-    echo "$SERVICE je pokrenut molim da ga zatvorite i ponovite update"
-exit 0
+    echo " instaliram F18"
+    echo -n "pricekajte u toku je download..."
 
-else
-    echo "$SERVICE nije pokrenut"
+    cd $DOWNLOAD_DIR
+    D_FILE=F18_Ubuntu_${ARCH}_${F18_VER}.gz
+    wget -q -nc $GCODE_URL_ROOT_F18/$D_FILE
+    echo wget $D_FILE , exit $? >> $LOG_F
+    cp -av $D_FILE $TMP_DIR
+
+    echo "ok - zavrseno"
+    cd $TMP_DIR
+    FILE=F18_Ubuntu_${ARCH}_${F18_VER}
+    gzip -dNf $FILE.gz
+
+    echo "upgrade"
+
+    FILE=$F18_INSTALL_ROOT/bin/F18
+    mv F18 $FILE
+
+    chmod +x $FILE
+    #chown $OWNER.$OWNER $FILE
+
+    echo "update je zavrsen"
 fi
- 
+#Instalacija predložaka izvještaja
+#Ako je broj argumenata jednako 2 i drugi argument je riječ template, uradi sljedeće
+if [[ $# == "2" && $F18_TPL == "template" ]]; then
+  
+    echo "Pričekajte, download predloška je u toku..."
 
-echo " instaliram F18"
-echo -n "pricekajte u toku je download..."
-
-cd $DOWNLOAD_DIR
-D_FILE=F18_Ubuntu_${ARCH}_${F18_VER}.gz
-wget -q -nc $GCODE_URL_ROOT_F18/$D_FILE
-echo wget $D_FILE , exit $? >> $LOG_F
-cp -av $D_FILE $TMP_DIR
-
-echo "ok - zavrseno"
-cd $TMP_DIR
-FILE=F18_Ubuntu_${ARCH}_${F18_VER}
-gzip -dNf $FILE.gz
-
-echo "upgrade"
-
-FILE=$F18_INSTALL_ROOT/bin/F18
-mv F18 $FILE
-
-chmod +x $FILE
-#chown $OWNER.$OWNER $FILE
-
-echo "update je zavrsen"
-
-#Instalacija template
-if [[ "$F18_TPL" == "" ]]; then
- echo "Nastavljam bez instalacije template-a"
-else
- cd $TMP_DIR
- TPL_FILE=F18_template_$F18_TPL
- wget -q -nc $GCODE_URL_ROOT_F18/$TPL_FILE.tar.bz2
-   if [ -d "$F18_INSTALL_ROOT/template" ]; then
-     tar jxf $TPL_FILE.tar.bz2
-     mv $TPL_FILE $F18_INSTALL_ROOT/template
-   else
-     mkdir $F18_INSTALL_ROOT/template
-     tar jxf $TPL_FILE $F18_INSTALL_ROOT/template
-   fi
+    cd $TMP_DIR
+    TPL_FILE=F18_template_$F18_VER
+    wget -q -nc $GCODE_URL_ROOT_F18/$TPL_FILE.tar.bz2
+    echo wget $TPL_FILE, exit $? >> $LOG_F
+    
+    echo "Instaliram predloške u $F18_INSTALL_ROOT/template"
+    if [ -d "$F18_INSTALL_ROOT/template" ]; then
+	tar -C $F18_INSTALL_ROOT -jxf $TPL_FILE.tar.bz2
+    else
+	mkdir $F18_INSTALL_ROOT/template
+	tar -C  $F18_INSTALL_ROOT -jxf $TPL_FILE.tar.bz2
+    fi
+    #uklanjam downloadovani fajl iz temp dir
+    rm -f $TMP_DIR/$TPL_FILE.tar.bz2
 fi
 
 for f in  $F18_INSTALL_ROOT/bin
@@ -99,5 +106,3 @@ do
   ls -l $DIR
   echo " "
 done
-
-
