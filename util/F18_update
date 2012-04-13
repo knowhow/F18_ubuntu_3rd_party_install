@@ -98,6 +98,12 @@ if [[ $# == "2" && $F18_TPL == "template" ]]; then
     rm -f $TMP_DIR/$TPL_FILE.tar.bz2
 fi
 
+#Ako je broj argumenata različit od 1 ili 2 prijavi grešku
+if [[ $# != "1" && $# != "2" ]]
+then
+    echo "Greška! Neispravan broj argumenata."
+fi
+
 for f in  $F18_INSTALL_ROOT/bin
 do
   DIR=$f
