@@ -14,6 +14,8 @@ GCODE_URL_ROOT=http://knowhow-erp.googlecode.com/files
 LOG_F=$TMP_DIR/F18_update.log
 
 F18_VER=$1
+F18_TPL=$2
+
 SERVICE='F18'
 ARCH=`uname -m`
 
@@ -30,6 +32,7 @@ echo "---------------------------------------------------"
 
 if [[ "$F18_VER" == "" ]]; then
 echo "niste unijeli verziju koju zelite postaviti, npr 0.9.5"
+echo "ukoliko želite instalirati i F18 predloške unesite verziju predloška, npr 1.1.0"
 exit 0
 fi
  
@@ -71,6 +74,22 @@ chmod +x $FILE
 #chown $OWNER.$OWNER $FILE
 
 echo "update je zavrsen"
+
+#Instalacija template
+if [[ "$F18_TPL" == "" ]]; then
+ echo "Nastavljam bez instalacije template-a"
+else
+ cd $TMP_DIR
+ TPL_FILE=F18_template_$F18_TPL
+ wget -q -nc $GCODE_URL_ROOT_F18/$TPL_FILE.tar.bz2
+   if [ -d "$F18_INSTALL_ROOT/template" ]; then
+     tar jxf $TPL_FILE.tar.bz2
+     mv $TPL_FILE $F18_INSTALL_ROOT/template
+   else
+     mkdir $F18_INSTALL_ROOT/template
+     tar jxf $TPL_FILE $F18_INSTALL_ROOT/template
+   fi
+fi
 
 for f in  $F18_INSTALL_ROOT/bin
 do
