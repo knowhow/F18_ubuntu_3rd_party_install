@@ -16,7 +16,8 @@ LOG_F=$TMP_DIR/F18_update.log
 F18_VER=$1
 F18_TPL=$2
 
-USER=`whoami`
+WHOAMI=`whoami`
+USER="bringout"
 
 SERVICE='F18'
 ARCH=`uname -m`
@@ -30,6 +31,8 @@ clear
 echo "F18 update ver: $VER, dat: $DAT"
 echo "F18 updater ver: $VER, dat: $DAT" >> $LOG_F
 echo "Broj argumenata: $#"
+echo "Trenutni korisnik: $WHOAMI"
+
 if [[ $# == "0" ]]; then
     echo "---------------------------------------------------"
     echo "Niste unijeli verziju koju želite postaviti, npr 0.9.5"
@@ -84,20 +87,15 @@ if [[ $# == "2" && $F18_TPL == "template" ]]; then
     #Provjeravam da li user ima permisije za /opt/knowhowERP direktorij
     OWNER=`ls -l /opt | grep knowhowERP | awk '{print $3}'`
     if [[ $USER != $OWNER ]]; then
-	echo "Vlasnik $F18_INSTALL_ROOT je korisnik $OWNER"
-	echo "Mijenjam vlasnika u $USER"
-	sudo chown $USER:$USER $F18_INSTALL_ROOT
+	echo "Vlasnik $F18_INSTALL_ROOT je korisnik $OWNER a neophodno je da vlasnik bude korisnik bringout"
     fi
-    #Neophodno je ponovo provjeriti da li je user owner
-    #Pošto je moguće da owner nije promijenjen u prethodnom if iskazu
-    #U tom slučaju bi ovdje izbacio grešku (ukoliko se ne izvrši ova provjera)
 
-    OWNER=`ls -l /opt | grep knowhowERP | awk '{print $3}'`
-
-    if [[ $USER == $OWNER ]]; then
+    if [[ $WHOAMI == $USER ]]; then
 	echo "Pričekajte, download predloška je u toku..."
 
 	cd $TMP_DIR
+	
+	echo "Trentuni direktorij `pwd` Lista fajlova: `ls -lah`"
 	TPL_FILE=F18_template_$F18_VER
 	wget -q -nc $GCODE_URL_ROOT_F18/$TPL_FILE.tar.bz2
 	echo wget $TPL_FILE, exit $? >> $LOG_F
@@ -111,6 +109,9 @@ if [[ $# == "2" && $F18_TPL == "template" ]]; then
 	fi
         #uklanjam downloadovani fajl iz temp dir
 	rm -f $TMP_DIR/$TPL_FILE.tar.bz2
+    else
+	echo "Trenutni korisnik je $WHOAMI logirajte se kao $USER"
+	echo ---------------------------------------
     fi
 fi
 
