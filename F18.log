@@ -1,0 +1,8 @@
+== F18 start: 16.04.12 / 12:28:12 ==
+setovanje ekrana: setovan ekran po rezoluciji
+server connection ok: admin / euroholz_2003
+home baze: /home/pmirza/.f18/euroholz_2003/
+current dbf version:       406
+    F18 dbf version:       406
+Kreiram indeks za tabelu /home/pmirza/.f18/euroholz_2003/kalk_doks.dbf, 1S
+index on IdFirma+idvd+SUBSTR(brdok,6)+LEFT(brdok,5) / 1S / /home/pmirza/.f18/euroholz_2003/kalk_doks / alias=KALK_DOKS / used() = .T.
