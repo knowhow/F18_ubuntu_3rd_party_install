@@ -1,8 +1,7 @@
 #!/bin/bash
 
-VER=1.4.0
-DAT=25.04.2012
-TIME=`date`
+VER=1.2.1
+DAT=13.04.2012
 
 TMP_DIR=/tmp/knowhowERP
 mkdir -p $TMP_DIR
@@ -52,10 +51,7 @@ if [[ "$ans" =~ "update" && "$ans"!="" ]]; then
     fi
 
     cd $DOWNLOAD_DIR
-    F18_VER=$(zenity --entry \
-	--title="Unos verzije za update" \
-	--text="Unesite verziju F18 na koju želite nadograditi:" \
-	--entry-text="1.0.");
+    F18_VER=$(zenity --entry --title="Unos verzije za update" --text="Unesite verziju F18 na koju želite nadograditi:" --entry-text="1.0.");
 
     #ako je korisnik odustao od downloada, prekini izvršenje skripte
     if [ $? -eq 1 ]; then
@@ -66,30 +62,26 @@ if [[ "$ans" =~ "update" && "$ans"!="" ]]; then
     #echo $D_FILE
 
 #Download fajla
-    wget -q -nc "$GCODE_URL_ROOT_F18/$D_FILE" 2>&1 | \
-	sed -u 's/^.* \+\([0-9]\+%\) \+\([0-9.]\+[GMKB]\) \+\([0-9hms.]\+\).*$/\1\n# Downloading... \2 (\3)/' | \
-	zenity --progress --title='Download' --auto-close
+    wget -q -nc "$GCODE_URL_ROOT_F18/$D_FILE" 2>&1 | \sed -u 's/^.* \+\([0-9]\+%\) \+\([0-9.]\+[GMKB]\) \+\([0-9hms.]\+\).*$/\1\n# Downloading... \2 (\3)/' | \zenity --progress --title='Download' --auto-close
 
     #Ukolikno download nije uspješan tj. fajl nije pronađen na trenutnoj lokaciji stavi to u log file
     if [ ! -f $D_FILE ]; then
 	zenity --error --title="Greška!" --text="Nije pronađen fajl $D_FILE"
-	echo "$TIME Fajl $D_FILE nije pronađen." >> $LOG_F
+	echo "Fajl $D_FILE nije pronađen." >> $LOG_F
 	exit 0
     fi
     #Počni update
     (
 	echo "20" ; sleep 1
 	echo "# Kopiram $D_FILE u privremeni direktorij..."; sleep 1
-	mv -f $D_FILE $TMP_DIR
+	cp -av $D_FILE $TMP_DIR
 
     # $? is shell variable that contains outcome of last ran command
     # cp will return 0 if there was no error
 	if [ $? -eq 0 ]; then
-	    echo "$TIME Kopiranje uspješno završeno" >> $LOG_F
+	    echo 'copied succesfully' >> $LOG_F
 	else
-	    echo "$TIME Greška prilikom kopiranja" >> $LOG_F
-	    zenity --error --title="Greška!" --text="Dogodila se pogreška prilikom kopiranja na privremenu lokaciju!"
-	    exit 0
+	    echo 'copying was not seccesfull' >> $LOG_F
 	fi
 
 	echo "40" ; sleep 1
@@ -98,37 +90,18 @@ if [[ "$ans" =~ "update" && "$ans"!="" ]]; then
 	FILE=F18_Ubuntu_${ARCH}_${F18_VER}
 	gzip -dNf $FILE.gz
 	if [ $? -eq 0 ]; then
-	    echo "$TIME Fajl uspješno otpakovan" >> $LOG_F
+	    echo 'Fajl uspješno otpakovan' >> $LOG_F
 	else
-	    echo "$TIME Greška prilikom otpakivanja arhive" >> $LOG_F
-	    zenity -error --title="Greška!" --text="Greška prilikom otpakivanja arhive!"
-	    exit 0
+	    echo 'Greška prilikom otpakivanja arhive' >> $LOG_F
 	fi
-	#Brišemo ovaj fajl
-	rm -f $FILE.gz
 
 	echo "70" ; sleep 1
 	echo "# Vršim update F18..."; sleep 1
-	FILE=$F18_INSTALL_ROOT/bin/
 	mv F18 $FILE
-	if [ $? -eq 0 ]; then
-	    echo "$TIME Prebacujem F18 fajl u $F18_INSTALL_ROOT" >> $LOG_F
-	else
-	    echo "$TIME Greška prilikom prebacivanja fajla u $F18_INSTALL_ROOT" >> $LOG_F
-	    zenity --error --title="Greška!" --text="Greška prilikom prebacivanja fajla u $F18_INSTALL_ROOT"
-	    exit 0
-	fi
 
 	echo "90" ; sleep 1
 	echo "# Dodjeljujem potrebne permisije "; sleep 1
-	chmod +x $FILE/F18
-	if [ $? -eq 0 ]; then
-	    echo "$TIME Dodjeljujem permisije F18 fajlu" >> $LOG_F
-	else
-	    echo "$TIME Ne mogu dodijeliti permisije za $F18_INSTALL_ROOT/F18" >> $LOG_F
-	    zenity --error --title="Greška!" --text="Greška prilikom dodjeljivanja izvršnih permisija $F18_INSTALL_ROOT/F18 fajlu"
-	    exit 0
-	fi
+	chmod +x $FILE
 
 	echo "100" ; sleep 1
 	echo "# Update je uspješno završen" ; sleep 1
