@@ -1,0 +1,43 @@
+== F18 start: 25.04.12 / 13:02:16 ==
+setovanje ekrana: setovan ekran po rezoluciji
+server connection ok: admin / f18_test
+home baze: /home/pmirza/.f18/f18_test/
+current dbf version:       407
+    F18 dbf version:       407
+prije synchro RJ / rj cnt = 2 / 0
+nakon synchro RJ / rj cnt = 2 / 0
+prije synchro OPS / ops cnt = 73 / 0
+nakon synchro OPS / ops cnt = 73 / 0
+prije synchro POR / por cnt = 3 / 0
+nakon synchro POR / por cnt = 3 / 0
+prije synchro DEST / dest cnt = 0 / 0
+nakon synchro DEST / dest cnt = 0 / 0
+prije synchro DOPR / dopr cnt = 11 / 0
+nakon synchro DOPR / dopr cnt = 11 / 0
+prije synchro KRED / kred cnt = 1 / 0
+nakon synchro KRED / kred cnt = 1 / 0
+prije synchro ROBA / roba cnt = 13 / 0
+nakon synchro ROBA / roba cnt = 13 / 0
+prije synchro SAST / sast cnt = 4 / 0
+nakon synchro SAST / sast cnt = 4 / 0
+prije synchro SIFK / sifk cnt = 36 / 0
+nakon synchro SIFK / sifk cnt = 36 / 0
+prije synchro SIFV / sifv cnt = 2981 / 25
+nakon synchro SIFV / sifv cnt = 2981 / 25
+prije synchro TDOK / tdok cnt = 46 / 0
+nakon synchro TDOK / tdok cnt = 46 / 0
+prije synchro TNAL / tnal cnt = 60 / 0
+nakon synchro TNAL / tnal cnt = 60 / 0
+prije synchro TRFP / trfp cnt = 532 / 0
+nakon synchro TRFP / trfp cnt = 532 / 0
+prije synchro ADRES / adres cnt = 0 / 0
+nakon synchro ADRES / adres cnt = 0 / 0
+prije synchro BANKE / banke cnt = 19 / 0
+nakon synchro BANKE / banke cnt = 19 / 0
+prije synchro KONTO / konto cnt = 1472 / 0
+nakon synchro KONTO / konto cnt = 1472 / 0
+prije synchro LD / ld_ld cnt = 0 / 0
+nakon synchro LD / ld_ld cnt = 0 / 0
+prije synchro LD_RJ / ld_rj cnt = 1 / 0
+nakon synchro LD_RJ / ld_rj cnt = 1 / 0
+prije synchro LOKAL / lokal cnt = 148 / 0
