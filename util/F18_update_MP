@@ -1,26 +1,7 @@
 #!/bin/bash
 
-PATH=/bin:/usr/bin:/usr/local/bin:/opt/knowhowERP/bin:/opt/knowhowERP/util
-VER=1.3.0
-DAT=18.04.2012
-
-clear
-echo "F18 update ver: $VER, dat: $DAT"
-
-
-F18_VER=$1
-F18_TPL=$2
-
-
-while [[ "$F18_VER" == "" ]] 
-do
-   echo "Unesite ispod verziju F18 koju zelite instalirati:"
-   read F18_VER
-
-done       
-   
-
-echo ok instaliram $F18_VER
+VER=1.2.1
+DAT=13.04.2012
 
 TMP_DIR=/tmp/knowhowERP
 mkdir -p $TMP_DIR
@@ -31,6 +12,9 @@ GCODE_URL_ROOT_F18=http://knowhow-erp-f18.googlecode.com/files
 GCODE_URL_ROOT=http://knowhow-erp.googlecode.com/files
 
 LOG_F=$TMP_DIR/F18_update.log
+
+F18_VER=$1
+F18_TPL=$2
 
 WHOAMI=`whoami`
 USER="bringout"
@@ -43,16 +27,26 @@ if [[ "$USER" == "root" ]]; then
 else
    OWNER=$USER
 fi
-
+clear
+echo "F18 update ver: $VER, dat: $DAT"
 echo "F18 updater ver: $VER, dat: $DAT" >> $LOG_F
+echo "Broj argumenata: $#"
 echo "Trenutni korisnik: $WHOAMI"
 
+if [[ $# == "0" ]]; then
+    echo "---------------------------------------------------"
+    echo "Niste unijeli verziju koju želite postaviti, npr 0.9.5"
+    echo "ukoliko želite instalirati i predloške izvještaja unesite verziju predloška i ključnu riječ template."
+    echo "Npr.: ./F18_update 1.1.0 template"
+    echo "---------------------------------------------------"
+    exit 0
+fi
  
 DOWNLOAD_DIR=~/Downloads
 mkdir -p $DOWNLOAD_DIR
 
 #Ako je broj argumenata jednako jedan uradi sljedeće
-if [[ "$F18_TPL" == "" ]]; then 
+if [[ $# == "1" ]]; then 
 
     if ps ax | grep -v grep | grep -w  $SERVICE > /dev/null
     then
@@ -63,11 +57,11 @@ if [[ "$F18_TPL" == "" ]]; then
     fi
 
     echo " instaliram F18"
-    echo  "pricekajte u toku je download..."
+    echo -n "pricekajte u toku je download..."
 
     cd $DOWNLOAD_DIR
     D_FILE=F18_Ubuntu_${ARCH}_${F18_VER}.gz
-    wget  -nc $GCODE_URL_ROOT_F18/$D_FILE
+    wget -q -nc $GCODE_URL_ROOT_F18/$D_FILE
     echo wget $D_FILE , exit $? >> $LOG_F
     cp -av $D_FILE $TMP_DIR
 
@@ -86,10 +80,9 @@ if [[ "$F18_TPL" == "" ]]; then
 
     echo "update je zavrsen"
 fi
-
 #Instalacija predložaka izvještaja
 #Ako je broj argumenata jednako 2 i drugi argument je riječ template, uradi sljedeće
-if [[ ! "$F18_TPL" == "" ]]; then
+if [[ $# == "2" && $F18_TPL == "template" ]]; then
   
     #Provjeravam da li user ima permisije za /opt/knowhowERP direktorij
     OWNER=`ls -l /opt | grep knowhowERP | awk '{print $3}'`
@@ -122,15 +115,17 @@ if [[ ! "$F18_TPL" == "" ]]; then
     fi
 fi
 
+#Ako je broj argumenata različit od 1 ili 2 prijavi grešku
+if [[ $# != "1" && $# != "2" ]]
+then
+    echo "Greška! Neispravan broj argumenata."
+fi
 
 for f in  $F18_INSTALL_ROOT/bin
 do
   DIR=$f
   echo $DIR
   echo ---------------------------------------
-  ls -l $DIR/*
+  ls -l $DIR
   echo " "
 done
-
-echo mozete izaci iz updatera ...
-read

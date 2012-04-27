@@ -1,0 +1,9 @@
+#!/bin/bash
+
+PATH=/bin:/usr/bin:/usr/local/bin:/opt/knowhowERP/bin:/opt/knowhowERP/util
+#1.4.0 by mirzap
+VER=1.4.0
+DAT=18.04.2012
+clear
+
+F18_VER=
