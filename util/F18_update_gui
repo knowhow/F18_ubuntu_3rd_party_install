@@ -44,7 +44,7 @@ ans=$(zenity --list \
     --width 450 --height 200 ); 
 #echo $ans
 
-if [[ "$ans" =~ "update" ]]; then
+if [[ "$ans" =~ "update" && "$ans" != "" ]]; then
     if ps ax | grep -v grep | grep -w $SERVICE > /dev/null
     then
 	zenity --error --title="Greška!" --text="Da bi ste izvršili nadogradnju morate zatvoriti $SERVICE!"
@@ -146,5 +146,75 @@ if [[ "$ans" =~ "update" ]]; then
     fi
 fi
 if [[ "$ans" =~ "template" && "$ans" != "" ]]; then
-    zenity --info --title="Answer" --text="Instaliram predloške..."
+
+    cd $DOWNLOAD_DIR
+    TPL_VER=$(zenity --entry \
+	    --title="Unos verzije predložaka" \
+	--text="Unesite verziju predložaka koju želite instalirati:" \
+	--entry-text="1.");
+
+    #U slučaju da korisnik odustane
+    if [ $? -eq 1 ]; then
+	exit 0
+    fi
+
+    #Provjeravam da li user ima permisije za /opt/knowhowERP direktorij
+    OWNER=`ls -l /opt | grep knowhowERP | awk '{print $3}'`
+    if [[ $USER != $OWNER ]]; then
+	zenity --error --title="Greška!" --text="Korisnik $USER nema pristup $F18_INSTALL_ROOT folderu"
+	exit 0
+    fi
+
+    if [[ $WHOAMI == $USER ]]; then
+
+	cd $TMP_DIR
+	TPL_FILE=F18_template_$TPL_VER
+
+	(
+	    echo "20" ; sleep 1
+	    echo "# Downloadujem potrebe fajlove..." ; sleep 1
+
+            #Download
+	    wget $GCODE_URL_ROOT_F18/$TPL_FILE.tar.bz2 2>&1 | \
+		sed -u 's/^.* \+\([0-9]\+%\) \+\([0-9.]\+[GMKB]\) \+\([0-9hms.]\+\).*$/\1\n# Downloading... \2 (\3)/' | \
+		zenity --progress --title='Download' --no-cancel --auto-close
+
+            #Ako downloadovani TPL fajl nije pronađen
+	    if [[ ! -f $TPL_FILE.tar.bz2 ]]; then
+		zenity --error --title="Greška!" --text="Nije pronađen fajl $TPL_FILE.tar.bz2"
+		echo "$TIME Fajl $TPL_FILE.tar.bz2 nije pronađen" >> $LOG_F
+		exit 0
+	    fi
+    
+	    echo "55" ; sleep 1
+	    echo "# Instaliram predloške..." ; sleep 1
+
+	    echo "Instaliram predloške u $F18_INSTALL_ROOT/template" >> $LOG_F
+	    if [ -d "$F18_INSTALL_ROOT/template" ]; then
+		tar -C $F18_INSTALL_ROOT -jxf $TPL_FILE.tar.bz2 | \
+		    zenity --progress --title='Otpakujem arhivu' --no-cancel --auto-close
+	    else
+		mkdir $F18_INSTALL_ROOT/template
+		tar -C  $F18_INSTALL_ROOT -jxf $TPL_FILE.tar.bz2 | \
+		    zenity --progress --title='Otpakujem arhivu' --no-cancel --auto-close
+	    fi
+
+	    echo "90" ; sleep 1
+	    echo "# Uklanjam privremene fajlove..." ; sleep 1
+
+            #uklanjam downloadovani fajl iz temp dir
+	    rm -f $TMP_DIR/$TPL_FILE.tar.bz2 
+
+	    echo "100" ; sleep 1
+	    echo "# Instalacija template je uspješno završena" ; sleep 1
+	) | zenity --progress \
+	    --title="Instalacija predložaka" \
+	    --text="Započinjem instalaciju/update predložaka..." \
+	    --percentage=0
+
+	if [ "$?" = -1 ]; then
+	    zenity --error --title="Greška" \
+		--text="Instalacija predložaka otkazana. Dogodila se greška."
+	fi
+    fi
 fi
