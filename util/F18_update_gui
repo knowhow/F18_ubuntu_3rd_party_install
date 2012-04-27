@@ -26,11 +26,11 @@ else
    OWNER=$USER
 fi
 
+
+
+
 DOWNLOAD_DIR=~/Downloads
 mkdir -p $DOWNLOAD_DIR
-
-#szAnswer=$(zenity --entry --text "where are you?" --entry-text "at home"); echo $szAnswer
-#ls -lah ~/github | column | zenity --text-info --width 530 --height 350
 
 ans=$(zenity --list \
     --text "Odaberite operaciju koju želite uraditi: " \
@@ -44,10 +44,15 @@ ans=$(zenity --list \
     --width 450 --height 200 ); 
 #echo $ans
 
-if [[ "$ans" =~ "update" && "$ans"!="" ]]; then
+if [[ "$ans" =~ "update" ]]; then
     if ps ax | grep -v grep | grep -w $SERVICE > /dev/null
     then
 	zenity --error --title="Greška!" --text="Da bi ste izvršili nadogradnju morate zatvoriti $SERVICE!"
+	exit 0
+    fi
+#Provjeri da li je skriptu pokrenuo korisnik bringout
+    if [ "$WHOAMI" != "$USER" ]; then
+	zenity --error --title="Greška!" --text="Morate biti logovani kao korisnik: $USER"
 	exit 0
     fi
 
@@ -66,12 +71,10 @@ if [[ "$ans" =~ "update" && "$ans"!="" ]]; then
     #echo $D_FILE
 
 #Download fajla
-    wget -q -nc "$GCODE_URL_ROOT_F18/$D_FILE" 2>&1 | \
-	sed -u 's/^.* \+\([0-9]\+%\) \+\([0-9.]\+[GMKB]\) \+\([0-9hms.]\+\).*$/\1\n# Downloading... \2 (\3)/' | \
-	zenity --progress --title='Download' --auto-close
+    wget "$GCODE_URL_ROOT_F18/$D_FILE" 2>&1 | sed -u 's/^.* \+\([0-9]\+%\) \+\([0-9.]\+[GMKB]\) \+\([0-9hms.]\+\).*$/\1\n# Downloading... \2 (\3)/' | zenity --progress --title='Download' --no-cancel --auto-close
 
     #Ukolikno download nije uspješan tj. fajl nije pronađen na trenutnoj lokaciji stavi to u log file
-    if [ ! -f $D_FILE ]; then
+    if [[ ! -f $D_FILE ]]; then
 	zenity --error --title="Greška!" --text="Nije pronađen fajl $D_FILE"
 	echo "$TIME Fajl $D_FILE nije pronađen." >> $LOG_F
 	exit 0
@@ -110,12 +113,12 @@ if [[ "$ans" =~ "update" && "$ans"!="" ]]; then
 	echo "70" ; sleep 1
 	echo "# Vršim update F18..."; sleep 1
 	FILE=$F18_INSTALL_ROOT/bin/
-	mv F18 $FILE
+	mv -f F18 $FILE
 	if [ $? -eq 0 ]; then
-	    echo "$TIME Prebacujem F18 fajl u $F18_INSTALL_ROOT" >> $LOG_F
+	    echo "$TIME Prebacujem F18 fajl u $F18_INSTALL_ROOT/bin/" >> $LOG_F
 	else
-	    echo "$TIME Greška prilikom prebacivanja fajla u $F18_INSTALL_ROOT" >> $LOG_F
-	    zenity --error --title="Greška!" --text="Greška prilikom prebacivanja fajla u $F18_INSTALL_ROOT"
+	    echo "$TIME Greška prilikom prebacivanja fajla u $F18_INSTALL_ROOT/bin/" >> $LOG_F
+	    zenity --error --title="Greška!" --text="Greška prilikom prebacivanja fajla u $F18_INSTALL_ROOT/bin/"
 	    exit 0
 	fi
 
