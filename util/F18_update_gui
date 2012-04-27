@@ -139,7 +139,9 @@ if [[ "$ans" =~ "update" && "$ans" != "" ]]; then
     ) | zenity --progress \
 	--title="F18 update" \
 	--text="Započinjem update F18..." \
-	--percentage=0
+	--percentage=0 \
+	--no-cancel
+
     if [ "$?" = -1 ]; then
 	zenity --error \
 	    --text="Update otkazan. Dogodila se greška."
@@ -189,7 +191,7 @@ if [[ "$ans" =~ "template" && "$ans" != "" ]]; then
 	    echo "55" ; sleep 1
 	    echo "# Instaliram predloške..." ; sleep 1
 
-	    echo "Instaliram predloške u $F18_INSTALL_ROOT/template" >> $LOG_F
+	    echo "$TIME Instaliram predloške u $F18_INSTALL_ROOT/template" >> $LOG_F
 	    if [ -d "$F18_INSTALL_ROOT/template" ]; then
 		tar -C $F18_INSTALL_ROOT -jxf $TPL_FILE.tar.bz2 | \
 		    zenity --progress --title='Otpakujem arhivu' --no-cancel --auto-close
@@ -210,11 +212,14 @@ if [[ "$ans" =~ "template" && "$ans" != "" ]]; then
 	) | zenity --progress \
 	    --title="Instalacija predložaka" \
 	    --text="Započinjem instalaciju/update predložaka..." \
-	    --percentage=0
+	    --percentage=0 \
+	    --no-cancel
 
 	if [ "$?" = -1 ]; then
 	    zenity --error --title="Greška" \
 		--text="Instalacija predložaka otkazana. Dogodila se greška."
+	    echo "$TIME Instalacija predložaka otkazana. Dogodila se greška u toku instalacije." >> $LOG_F
+	    exit 0
 	fi
     fi
 fi
